@@ -10,8 +10,8 @@ int main()
 	srand (time(NULL));
 	
 //declare map values
-	int axisx = 40;
-	int axisy = 40;
+	int axisx = 30;
+	int axisy = 30;
 	int terrainmap[axisx][axisy][2];
 
 //fill map with boolean values	
