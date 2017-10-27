@@ -5,8 +5,8 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
+	
 	srand (time(NULL));
 
 //declare map values
