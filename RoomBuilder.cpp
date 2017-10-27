@@ -8,7 +8,7 @@ using namespace std;
 int main()
 {
 	srand (time(NULL));
-	
+	//im a fucking panda
 //declare map values
 	int axisx = 30;
 	int axisy = 30;
