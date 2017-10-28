@@ -3,7 +3,9 @@
 
 
 #include <iostream>
-#include <stdio.h>    
+#include <stdio.h>   
+#include <windows.h> 
+
 #include <stdlib.h>   
 #include <time.h>  
 #include <limits>  
@@ -29,8 +31,9 @@ int gameStartTime;
 
 int main(){
 	
-
-	gameActive = displayTitleScreen(0,0,0,2); // display the title screen with version numbers
+	
+	gameActive = displayTitleScreen(0,0,0,3); // display the title screen with version numbers
+	
 	gameStartTime = clock();
 	srand (time(NULL));
 	
@@ -43,11 +46,29 @@ int main(){
 		
 			
 		Map firstMap;
-		//firstMap.fillMap(1,0); not working Q!Q!Q!Q!
-	
+		firstMap.fillMap(0,0);
+		firstMap.fillMap(1,0);
+		firstMap.printMap(0);
+		firstMap.fillMapNoise(0,1);
+		firstMap.printMap(0);
+		firstMap.smoothMap(0,1,4);
+		firstMap.printMap(1);
+		firstMap.killLoners(1,1,3);
+		firstMap.printMap(0);
+		firstMap.smoothMap(0,1,4);
+		firstMap.printMap(1);
+		firstMap.smoothMap(0,1,3);
+		firstMap.printMap(1);
+		firstMap.killLoners(1,1,3);
+		firstMap.printMap(1);
+		firstMap.smoothMap(1,1,6);
+		firstMap.printMap(1);
+		
+			system("pause");
+		system("CLS");
 		//--------BEGIN GAME----------------------------
 		while (gameActive == true){
-	
+			firstMap.printMapFancy(1);
 			/*
 			---------------------code block for time monitoring and testing------------
 			
@@ -66,7 +87,7 @@ int main(){
 	
 	
 	
-	
+	system("pause");
 	displayEndScreen((clock()-gameStartTime )/1000); // display the title screen with version numbers
 	return 0;
 }

@@ -5,13 +5,11 @@
 
 using namespace std;
 
-int main() {
+int buildRoom(int axisx, int axisy ) {
 	
 	srand (time(NULL));
 
 //declare map values
-	int axisx = 30;
-	int axisy = 30;
 	int terrainmap[axisx][axisy][3];
 	int roomCenterX = 0;
 	int roomCenterY = 0;

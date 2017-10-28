@@ -1,8 +1,4 @@
-
-#include "mapHandler.h"
-
-
-
+#include "stdafx.h"
 
 #include <iostream>
 #include <stdio.h>    
@@ -10,6 +6,8 @@
 #include <time.h>  
 #include <limits>  
 #include <sstream>
+
+#include "mapHandler.h"
 
 using namespace std;
 
@@ -25,8 +23,6 @@ void Map::fillMap(int layer,int fillNumber){
 	}
 }
 
-NNNNNOOOOOOOTTTTTTTT WWWWOOOOORRRRRRRKKKKIIIIIINNNNNNNNNNGGGGGGGGGGQ!Q!Q!Q!Q!Q!Q!Q!Q!Q!
-*/
 void Map::printMap(int layer){
 	
 	for(i=0;i< getMapDimensionX(); i++){

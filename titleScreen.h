@@ -1,5 +1,7 @@
 //header file for splash screens at the begining and ending of play
 #pragma once
+#include <windows.h> 
+
 using namespace std;
 
 
@@ -12,7 +14,7 @@ bool displayTitleScreen(int vNRelease,int vNInternal,int vNAsset,int vNScript) /
 	bool playerTitleResult = false;
 	
 	
-	
+	system("CLS");
 	cout << "                                                          Trevor Haggerty & Zachary Drummond's    "<< endl;
 	cout << "   #############################################################################################  "<< endl;
 	cout << "        -             -                   -             -                       -                 "<< endl;
@@ -33,7 +35,7 @@ bool displayTitleScreen(int vNRelease,int vNInternal,int vNAsset,int vNScript) /
 		cin >> playerTitleDecision;
 	 }
 	 
-	 
+	  system("CLS");
 	 //if the player said yes set the bool to yes telling the game to start
 	 if ((playerTitleDecision == 'y')||(playerTitleDecision == 'Y')){
 		 playerTitleResult = true;
@@ -46,13 +48,14 @@ bool displayTitleScreen(int vNRelease,int vNInternal,int vNAsset,int vNScript) /
 	return playerTitleResult;
 	 
 	 
-	 
+	
 }
 
 
 	 //display the exiting splash screen
-int displayEndScreen(int playTime)
+int displayEndScreen(float playTime)
 {
+	system("CLS");
 	 cout << "   #############################################################################################"<< endl;
 	 cout << "                                                                                                "<< endl;
 	 cout << "               ####       ####         ####     ####       ######   ##  ##   ######             "<< endl;
