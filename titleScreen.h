@@ -13,24 +13,24 @@ bool displayTitleScreen(int vNRelease,int vNInternal,int vNAsset,int vNScript) /
 	
 	
 	
-	 cout << "                                                          Trevor Haggerty & Zachary Drummond's    "<< endl;
-	 cout << "   #############################################################################################  "<< endl;
-	 cout << "                                                                                                  "<< endl;
-	 cout << "   ##  ##     ##     ####     ##   ########  ######        ####  ##  ##  ######   ####     ####   "<< endl;
-	 cout << "   ## ##     ## ##   ##  ##  ## ##    ##     ##          ##      ##  ##  ##      ##  ##   ##  ##  "<< endl;
-	 cout << "   ####      #####   ####    #####    ##     ####       ##       ######  ####     ##       ##     "<< endl;
-	 cout << "   ##  ##   ##   ##  ##  ## ##   ##   ##     ##         ##       ##  ##  ##         ##       ##   "<< endl;
-	 cout << "   ##  ##   ##   ##  ##  ## ##   ##   ##     ##          ##      ##  ##  ##      ##  ##   ##  ##  "<< endl;
-	 cout << "   ##  ##   ##   ##  ##  ## ##   ##   ##     ######        ####  ##  ##  ######   ####     ####   "<< endl;
-	 cout << "                                                                                                  "<< endl;
- 	 cout << "   #############################################################################################  "<< endl;
-	 cout << "   version "<< vNRelease <<"."<< vNInternal <<"."<< vNAsset<<"."<< vNScript <<"\n\n\n"<< endl;
+	cout << "                                                          Trevor Haggerty & Zachary Drummond's    "<< endl;
+	cout << "   #############################################################################################  "<< endl;
+	cout << "        -             -                   -             -                       -                 "<< endl;
+	cout << "   ##  ##     ##  -  ####     ##   ########  ######        ####  ##  ##  ######   ####     ####   "<< endl;
+	cout << "   ## ##   - ## ##   ##  ##  ## ##    ##     ##          ##      ##  ##  ##      ##  ##   ##  ##  "<< endl;
+	cout << "   ####   -  #####   ####    #####    ##     ####   -   ##       ######  ####     ##       ##     "<< endl;
+	cout << "   ##  ##   ##   ##  ##  ## ##   ##   ##     ##         ##       ##  ##  ##         ##       ##   "<< endl;
+	cout << "   ##  ##   ##   ##  ##  ## ##   ##   ##     ##          ##      ##  ##  ##      ##  ##   ##  ##  "<< endl;
+	cout << "   ##  ## - ##   ##  ##  ## ##   ##   ##     ######        ####  ##  ##  ######   ####     ####   "<< endl;
+	cout << "       -                    -                      -            -                                 "<< endl;
+ 	cout << "   #############################################################################################  "<< endl;
+	cout << "   version "<< vNRelease <<"."<< vNInternal <<"."<< vNAsset<<"."<< vNScript <<"\n\n\n"<< endl;
 	 
 	 
 	 //ask the player if they would like to play and read the results for a y,Y,n,or N
 	 while ((playerTitleDecision != 'y')&&(playerTitleDecision != 'Y')&&(playerTitleDecision != 'n')&&(playerTitleDecision != 'N')){
-	 cout << " Would you like to play (y/n) "<<endl;
-	 cin >> playerTitleDecision;
+		cout << " Would you like to play (y/n) "<<endl;
+		cin >> playerTitleDecision;
 	 }
 	 
 	 
