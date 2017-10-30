@@ -1,4 +1,4 @@
-
+	
 #pragma once
 #include <iostream>
 #include <stdio.h>    
@@ -173,10 +173,11 @@ class Map{
 		
 		void printMapFancy(int layer){
 			cout << "\n print the map";
+			cout << endl;
 			int scanValue;
 		
 			for(int i=0;i< getMapDimensionX(); i++){
-				cout << endl;
+				
 				for(int j=0;j< getMapDimensionY(); j++){
 					
 					
@@ -200,6 +201,7 @@ class Map{
 							cout << "  ";
 						}
 				}
+			cout << endl;
 			}
 			cout << endl;
 		}; 
