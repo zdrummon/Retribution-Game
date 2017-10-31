@@ -3,7 +3,10 @@
 class ExitGame {
 	public:
 		ExitGame();
-		int exitScreen();	
+		
+		//exit splash screen
+		int exitScreen();
+		
 	protected:
 	private:
 };

@@ -1,24 +1,31 @@
 //libraries
 //headers
 #include "StartGame.h"
+#include "MapGenerator.h"
 #include "RunGame.h"
 #include "Exitgame.h"
 //namespaces
 using namespace std;
-
+//class body
 int main() {
+	
 	//start the game
 	StartGame StartGameObject;
+	StartGameObject.graphicsHandler();
+	StartGameObject.uiHandler();
 	StartGameObject.startScreen(0,0,0,3);
 	StartGameObject.startMenu();
+	StartGameObject.inputHandler();
+	StartGameObject.outputHandler();
 	
 	if (StartGameObject.startMenu() == 1) {	
-		//handle the map
-	//	MapHandler MapHandlerObject;
+		
+		//generate the map
+		MapGenerator MapGeneratorObject;
+		MapGeneratorObject.mapGeneration();
 		
 		//run the game
 		RunGame RunGameObject;
-		RunGameObject.mapHandler();
 		RunGameObject.playGame();
 	}
 	

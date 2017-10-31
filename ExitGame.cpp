@@ -6,7 +6,7 @@
 #include "ExitGame.h"
 //namespaces
 using namespace std;
-
+//class body
 ExitGame::ExitGame() {}
 
 //this works fine stop looking here

@@ -6,10 +6,16 @@
 #include "StartGame.h"
 //namespaces
 using namespace std;
-
+//class body
 StartGame::StartGame() {}
 
-//opening splash screen on program run
+//TODO
+StartGame::graphicsHandler() {}
+
+//TODO
+StartGame::uiHandler() {}
+
+//opening splash screen
 StartGame::startScreen(int versionRelease, 
 					   int versionInternal,
 					   int versionAsset, 
@@ -33,6 +39,10 @@ StartGame::startScreen(int versionRelease,
 	return 0;
 }
 
+//TODO
+StartGame::inputHandler() {}
+
+//game start menu
 StartGame::startMenu() {
 	
 	//ask the player if they would like to play and read the results for a y,Y,n,or N
@@ -41,7 +51,7 @@ StartGame::startMenu() {
 		cin >> startMenuInput;
 	}
 	  
-	//if the player said yes set the bool to yes telling the game to start
+	//return value based on menu interaction
 	system("CLS");
 	if ((startMenuInput == 'y')||(startMenuInput == 'Y')) {
 		return 1;
@@ -49,6 +59,9 @@ StartGame::startMenu() {
 		return 0; 
 	}
 }
+
+//TODO
+StartGame::outputHandler() {}
 
 
 

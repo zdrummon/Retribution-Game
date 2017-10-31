@@ -3,13 +3,17 @@
 #include <windows.h> 
 //headers
 #include "RunGame.h"
+#include "GameHandler.h"
 //namespaces
 using namespace std;
+//class body
+RunGame::RunGame() {}
 
-//run the game
-RunGame::RunGame() {
+//play the game
+RunGame::playGame() {
+	quitGame = false;
 	
-	//TODO map handler
+	//temporary map data
 	cout << endl;
 	for (int i = 0; i < 10; i++) {
 		cout << "  " << 9 - i << " ";
@@ -19,18 +23,16 @@ RunGame::RunGame() {
 		}
 		cout << endl;
 	}
-}
-
-//build the map
-RunGame::mapHandler() {
-	return 0;
-}
-
-//play the game
-RunGame::playGame() {
-	quitGame = false;
 	
-	//TODO input handler
+	//create game handlers
+	GameHandler GameHandlerObject;
+	GameHandlerObject.mapHandler();
+	GameHandlerObject.mobHandler();
+	GameHandlerObject.itemHandler();
+	GameHandlerObject.playerHandler();
+	GameHandlerObject.effectHandler();
+	
+	//TODO primary game logic
 	int i = 0;
 	cout << "    ";
 	while (quitGame == false) {

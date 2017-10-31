@@ -3,12 +3,16 @@
 class RunGame {
 	public:
 		RunGame();
+
+		//temporary map data
 		int mapArray[10][10];
-		int mapHandler();
 		
-		
+		//quit game flag
 		bool quitGame;
+		
+		//play the game
 		int playGame();
+		
 	protected:
 	private:
 };
