@@ -2,9 +2,10 @@
 
 class Map {
 	public:
-		Map(){};
+		Map();
 		
 		//setters and getters
+		/*
 		void setMapXDimension(int xDimension);
 		int  getMapXDimension();
 		
@@ -13,11 +14,13 @@ class Map {
 		
 		void setMapSeed(int xDimension);
 		int  getMapXSeed();
-		
-		
+		*/
+		int terrainmap[50][50][3];
+		int mapXDimension = 30;
+		int mapYDimension = 30;
 	protected:
 	private:
-		int mapXDimension;
-		int mapYDimension;
+		
 		int mapSeed;
+		
 };

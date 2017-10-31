@@ -5,9 +5,9 @@
 using namespace std;
 
 Map::Map(){}
-
+/*
 Map::setMapXDimension(int xDimension){
-
+ mapXDimension = xDimension;
 }
 
 Map::getMapXDimension(){
@@ -29,4 +29,5 @@ Map::setMapSeed(int xDimension){
 Map::getMapXSeed(){
 	
 }
+*/
 

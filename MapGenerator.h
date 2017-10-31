@@ -5,8 +5,13 @@ class MapGenerator {
 		MapGenerator();
 		
 		//TODO
-		int mapGeneration();
-				
+		
+		int cellularAutomata(int scanLayer,
+				 int writeLayer,
+				 int neighborCount,
+				 int writeTileType,
+				 int mode);
 	protected:
 	private:
 };
+

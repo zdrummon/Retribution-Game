@@ -22,11 +22,12 @@ int main() {
 		
 		//generate the map
 		MapGenerator MapGeneratorObject;
-		MapGeneratorObject.mapGeneration();
+		//MapGeneratorObject.mapGeneration();
 		
 		//run the game
 		RunGame RunGameObject;
 		RunGameObject.playGame();
+	
 	}
 	
 	//exit the game

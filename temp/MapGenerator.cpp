@@ -1,38 +1,130 @@
 //libraries
 //headers
 #include "MapGenerator.h"
+#include "Map.h"
 //namespaces
 using namespace std;
 
+MapGenerator::MapGenerator(){
+	Map CurrentMap;
+	
+}
 
-
-
-cellularAutomata(int scanLayer,
-							 int writeLayer,
-							 int scanTileTypeOne,
-							 int scanTileTypeTwo,
-							 int writeTileType
-							 int mode){
+MapGenerator::cellularAutomata(int scanLayer,
+				 int writeLayer,
+				 int neighborCount;
+				 int writeTileType;
+				 int mode){
 	
-	
-	
-	
-	
-	for (int i = 1; i < axisx - 1; i++) {
-		for (int j = 1; j < axisy - 1; j++) {			
+	switch (mode)
+	{
+	case 0:
+	for (int i = 1; i < mapXDimension - 1; i++) {
+		for (int j = 1; j < mapYDimensiony - 1; j++) {			
 			
-			if ((terrainmap [i - 1][j - 1][  0  ] +
-				 terrainmap [  i  ][j - 1][  0  ] +
-				 terrainmap [i + 1][j - 1][  0  ] +
-				 terrainmap [i - 1][  j  ][  0  ] +
-				 terrainmap [i + 1][  j  ][  0  ] +
-				 terrainmap [i - 1][j + 1][  0  ] +
-				 terrainmap [  i  ][j + 1][  0  ] +
-				 terrainmap [i + 1][j + 1][  0  ]) > 4) {
+			if ((CurrentMap.terrainmap [i - 1][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i    ][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i - 1][j    ][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j    ][  scanLayer  ] +
+				 CurrentMap.terrainmap [i - 1][j + 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i    ][j + 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j + 1][  scanLayer  ]) < neighborCount) {
 			                                   
-				 terrainmap [  i  ][  j  ][  0  ] = 1;
+				 CurrentMap.terrainmap [i    ][j    ][  writeLayer  ] = writeTileType;
 			}
 		}
 	}
+	break;
+	case 1:
+	for (int i = 1; i < mapXDimension - 1; i++) {
+		for (int j = 1; j < mapYDimensiony - 1; j++) {			
+			
+			if ((CurrentMap.terrainmap [i - 1][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i    ][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i - 1][j    ][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j    ][  scanLayer  ] +
+				 CurrentMap.terrainmap [i - 1][j + 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i    ][j + 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j + 1][  scanLayer  ]) =< neighborCount) {
+			                                              
+				 CurrentMap.terrainmap [i    ][j    ][  writeLayer  ] = 1;
+			}
+		}
+	}
+	break;
+	case 2:
+	for (int i = 1; i < mapXDimension - 1; i++) {
+		for (int j = 1; j < mapYDimensiony - 1; j++) {			
+			
+			if ((CurrentMap.terrainmap [i - 1][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i    ][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i - 1][j    ][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j    ][  scanLayer  ] +
+				 CurrentMap.terrainmap [i - 1][j + 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i    ][j + 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j + 1][  scanLayer  ]) = writeTileType) {
+			                                              
+				 CurrentMap.terrainmap [i    ][j    ][  writeLayer  ] = 1;
+			}
+		}
+	}
+	break;
+	case 3:
+	for (int i = 1; i < mapXDimension - 1; i++) {
+		for (int j = 1; j < mapYDimensiony - 1; j++) {			
+			
+			if ((CurrentMap.terrainmap [i - 1][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i    ][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i - 1][j    ][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j    ][  scanLayer  ] +
+				 CurrentMap.terrainmap [i - 1][j + 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i    ][j + 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j + 1][  scanLayer  ]) => writeTileType) {
+			                                              
+				 CurrentMap.terrainmap [i    ][j    ][  writeLayer  ] = 1;
+			}
+		}
+	}
+	break;
+	case 4:
+	for (int i = 1; i < mapXDimension - 1; i++) {
+		for (int j = 1; j < mapYDimensiony - 1; j++) {			
+			
+			if ((CurrentMap.terrainmap [i - 1][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i    ][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i - 1][j    ][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j    ][  scanLayer  ] +
+				 CurrentMap.terrainmap [i - 1][j + 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i    ][j + 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j + 1][  scanLayer  ]) > writeTileType) {
+			                                              
+				 CurrentMap.terrainmap [i    ][j    ][  writeLayer  ] = 1;
+			}
+		}
+	}
+	break;
+	case 5:
+	for (int i = 1; i < mapXDimension - 1; i++) {
+		for (int j = 1; j < mapYDimensiony - 1; j++) {			
+			
+			if ((CurrentMap.terrainmap [i - 1][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i    ][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j - 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i - 1][j    ][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j    ][  scanLayer  ] +
+				 CurrentMap.terrainmap [i - 1][j + 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i    ][j + 1][  scanLayer  ] +
+				 CurrentMap.terrainmap [i + 1][j + 1][  scanLayer  ]) != writeTileType) {
+			                                              
+				 CurrentMap.terrainmap [i    ][j    ][  writeLayer  ] = 1;
+			}
+		}
+	}
+	break;
 	
 }
