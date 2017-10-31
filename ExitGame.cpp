@@ -1,6 +1,7 @@
 //libraries
 #include <windows.h> 
 #include <iostream>
+#include <time.h>
 //headers
 #include "ExitGame.h"
 //namespaces
