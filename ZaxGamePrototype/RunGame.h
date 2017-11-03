@@ -4,8 +4,11 @@ class RunGame {
 	public:
 		RunGame();
 		
+		//static map size
+		static int const MAPSIZE = 10;
+		
 		//temporary map data
-		int mapArray[10][10];
+		int mapArray[MAPSIZE][MAPSIZE];
 	
 		//quit game flag
 		bool quitGame;

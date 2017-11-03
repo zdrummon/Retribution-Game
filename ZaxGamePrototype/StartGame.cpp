@@ -1,7 +1,6 @@
 //libraries
 #include <windows.h> 
 #include <iostream>
-#include <time.h>
 //headers
 #include "StartGame.h"
 //namespaces
