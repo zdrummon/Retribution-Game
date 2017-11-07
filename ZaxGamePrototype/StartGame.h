@@ -9,9 +9,9 @@ class StartGame {
 		
 		//opening splash screen
 		int startScreen(int versionRelease, 
-						 int versionInternal,
-						 int versionAsset, 
-						 int versionScript);
+						int versionInternal,
+						int versionAsset, 
+						int versionScript);
 		
 		//game start menu
 		int startMenu();
