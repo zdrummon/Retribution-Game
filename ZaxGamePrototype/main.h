@@ -28,7 +28,7 @@ bool initSDL() {
     } else {
         
 		//Create window
-        gWindow = SDL_CreateWindow ("makefile compile test", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        gWindow = SDL_CreateWindow ("SDL WINDOW TUTORIAL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		
 		if (gWindow == NULL) {
 			
