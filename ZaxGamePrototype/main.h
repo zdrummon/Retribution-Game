@@ -3,8 +3,8 @@
 //{---CONSTANTS
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
-enum KeyPressSurfaces
-{
+
+enum KeyPress {
     KEY_PRESS_DEFAULT,
     KEY_PRESS_UP,
     KEY_PRESS_DOWN,
