@@ -16,7 +16,7 @@ LIBRARY_PATHS = -LC:/mingw_dev_lib/lib
 COMPILER_FLAGS = -w -Wl,-subsystem,windows
 
 #LINKER_FLAGS specifies the libraries we're linking against
-LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2
+LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 
 #This is the target that compiles our executable
 all : $(OBJS)

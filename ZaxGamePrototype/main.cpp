@@ -1,8 +1,9 @@
 //libraries
 #include <SDL.h>
+#include <SDL_image.h>
 #include <ctime>
-#include <string>
 #include <stdio.h>
+#include <string>
 //headers
 #include "main.h"
 #include "StartGame.h"
@@ -14,26 +15,26 @@ using namespace std;
 //main class body
 int main (int argc, char* args[]) {
 	
-	//Start debug log
+	//{---LOG---start debug log
 	startTicker = clock();
 	logCount = 0;
-	printf ("\n START DEBUG LOG\n ==============================");
+	printf ("\n START DEBUG LOG\n =============================="); //}
 	
-	//Starts up SDL and creates window
+	//Starts up SDL and creates window 
 	if (!initSDL()) {
 		
-		//---LOG	
+		//{---LOG---failed to initialize SDL	
 		logEvents();
-		printf ("Failed to initialize!");
+		printf ("failed to initialize SDL!"); //}
 	
 	} else {
 		
 		//Loads media
 		if (!loadMedia()) {
 			
-			//---LOG	
+			//{---LOG---failed to load media	
 			logEvents();
-			printf ("Failed to load media!");
+			printf ("failed to load media!"); //}
 			
 		} else {
 			
@@ -42,6 +43,9 @@ int main (int argc, char* args[]) {
             
 			//Event handler
             SDL_Event e;
+			
+			//Set default current surface
+            gCurrentSurface = gKeyPressSurfaces [KEY_PRESS_SURFACE_DEFAULT];
 						
 			//While application is running
             while (!quit) {
@@ -54,22 +58,59 @@ int main (int argc, char* args[]) {
 						
 						quit = true;	
 						
-						//---LOG
+						//{---LOG---quit flag has been set
 						logEvents();
-						printf ("You quit the program");
+						printf ("quit flag has been set"); //}
                     }
 					
 					//User presses a key
                     if (e.type == SDL_KEYDOWN) {
+						
+						//Select surfaces based on key press
+                        switch (e.key.keysym.sym) {
+                            
+							case SDLK_UP:
+							//{---LOG---up key pressed
+							logEvents();
+							printf ("up key pressed"); //}
+                            gCurrentSurface = gKeyPressSurfaces [KEY_PRESS_SURFACE_UP];
+                            break;
 
-						//---LOG
-						logEvents();
-						printf ("You pressed a key");
+                            case SDLK_DOWN:
+							//{---LOG---down key pressed
+							logEvents();
+							printf ("down key pressed"); //}							
+                            gCurrentSurface = gKeyPressSurfaces [KEY_PRESS_SURFACE_DOWN];
+                            break;
+
+                            case SDLK_LEFT:
+							//{---LOG---left key pressed
+							logEvents();
+							printf ("left key pressed"); //}							
+                            gCurrentSurface = gKeyPressSurfaces [KEY_PRESS_SURFACE_LEFT];
+                            break;
+
+                            case SDLK_RIGHT:
+							//{---LOG---right key pressed
+							logEvents();
+							printf ("right key pressed"); //}							
+                            gCurrentSurface = gKeyPressSurfaces [KEY_PRESS_SURFACE_RIGHT];
+                            break;
+
+                            default:						
+                            gCurrentSurface = gKeyPressSurfaces [KEY_PRESS_SURFACE_DEFAULT];
+                            break;
+                        }
                     }
                 }
 				
-				//Apply the image
-				SDL_BlitSurface (gHelloWorld, NULL, gScreenSurface, NULL);
+				//Apply the image stretched
+				SDL_Rect stretchRect;
+				stretchRect.x = 0;
+				stretchRect.y = 0;
+				stretchRect.w = SCREEN_WIDTH;
+				stretchRect.h = SCREEN_HEIGHT;
+				SDL_BlitScaled (gStretchedSurface, NULL, gScreenSurface, &stretchRect);
 			
 				//Update the surface
 				SDL_UpdateWindowSurface (gWindow);
@@ -78,6 +119,7 @@ int main (int argc, char* args[]) {
 		}
 	}
 		
+//{ OLD PROGRAM
 //	//start the game
 //	StartGame StartGameObject;
 //	StartGameObject.startScreen(0,0,0,1);
@@ -92,13 +134,14 @@ int main (int argc, char* args[]) {
 //	//exit the game
 //	ExitGame ExitGameObject;
 //	ExitGameObject.exitScreen();
+//}
 	
 	//Frees media and shuts down SDL
 	void closeSDL();
 	
-	//---LOG
+	//{---LOG---program has ended
 	logEvents();
-	printf ("The program has ended\n ==============================\n END DEBUG LOG\n");
+	printf ("program has ended\n ==============================\n END DEBUG LOG\n"); //}
 
 	return 0;	
 }
