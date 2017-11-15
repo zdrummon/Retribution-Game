@@ -24,16 +24,16 @@ double ticksInSeconds; //}
 SDL_Surface* loadSurface (std::string path);
 
 //The window we'll be rendering to
-SDL_Window* windowHandler = NULL;
+SDL_Window* gWindow = NULL;
     
 //The surface contained by the window
-SDL_Surface* windowSurface = NULL;
+SDL_Surface* gScreenSurface = NULL;
 
 //The images that correspond to a keypress
-SDL_Surface* keySurfaces [KEY_PRESS_TOTAL];
+SDL_Surface* gKeyPressSurfaces [KEY_PRESS_TOTAL];
 
 //Current displayed image
-SDL_Surface* currentSurface = NULL; //}
+SDL_Surface* gCurrentSurface = NULL; //}
 
 //{---Function prototypes
 bool initSDLHandler();
@@ -65,9 +65,9 @@ bool initSDLHandler() {
     } else {
         
 		//Create window
-        windowHandler = SDL_CreateWindow ("SOFTWARE I WROTE WHILE POOPING", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        gWindow = SDL_CreateWindow ("SOFTWARE I WROTE WHILE POOPING", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		
-		if (windowHandler == NULL) {
+		if (gWindow == NULL) {
 
 			initSuccess = false;
 		
@@ -77,22 +77,22 @@ bool initSDLHandler() {
 			
 		} else {
 
-//            //Initialize PNG loading
-//            int imgFlags = IMG_INIT_PNG;
-//            if (!(IMG_Init (imgFlags) & imgFlags)) {
-//				
-//				//{---LOG---SDL_image could not initialize	
-//				logEvents();
-//                printf( "SDL_image could not initialize! SDL_image Error: %s", IMG_GetError() ); //}
-//
-//                initSuccess = false;
-//
-//			} else {
-//				
+            //Initialize PNG loading
+            int imgFlags = IMG_INIT_PNG;
+            if (!(IMG_Init (imgFlags) & imgFlags)) {
+				
+				//{---LOG---SDL_image could not initialize	
+				logEvents();
+                printf( "SDL_image could not initialize! SDL_image Error: %s", IMG_GetError() ); //}
+
+                initSuccess = false;
+
+			} else {
+				
                 //Get window surface
-                windowSurface = SDL_GetWindowSurface (windowHandler);
+                gScreenSurface = SDL_GetWindowSurface (gWindow);
             
-//			}
+			}
         }
     }
 	
@@ -104,9 +104,9 @@ bool mediaHandler() {
     bool initSuccess = true;
 	
     //Load default surface
-    keySurfaces [KEY_PRESS_DEFAULT] = loadSurface ("default.bmp");
+    gKeyPressSurfaces [KEY_PRESS_DEFAULT] = loadSurface ("default.bmp");
     
-	if (keySurfaces [KEY_PRESS_DEFAULT] == NULL) {
+	if (gKeyPressSurfaces [KEY_PRESS_DEFAULT] == NULL) {
     
 		//{---LOG---failed to load default image
 		logEvents();
@@ -116,9 +116,9 @@ bool mediaHandler() {
     }
 
     //Load up surface
-    keySurfaces [KEY_PRESS_UP] = loadSurface ("up.bmp");
+    gKeyPressSurfaces [KEY_PRESS_UP] = loadSurface ("up.bmp");
 
-    if (keySurfaces [KEY_PRESS_UP] == NULL) {
+    if (gKeyPressSurfaces [KEY_PRESS_UP] == NULL) {
     
 		//{---LOG---failed to load up image
 		logEvents();
@@ -128,9 +128,9 @@ bool mediaHandler() {
     }
 
     //Load down surface
-    keySurfaces [KEY_PRESS_DOWN] = loadSurface ("down.bmp");
+    gKeyPressSurfaces [KEY_PRESS_DOWN] = loadSurface ("down.bmp");
     
-	if (keySurfaces [KEY_PRESS_DOWN] == NULL) {
+	if (gKeyPressSurfaces [KEY_PRESS_DOWN] == NULL) {
     
 		//{---LOG---failed to load down image
 		logEvents();
@@ -140,9 +140,9 @@ bool mediaHandler() {
     }
 
     //Load left surface
-    keySurfaces [KEY_PRESS_LEFT] = loadSurface ("left.bmp");
+    gKeyPressSurfaces [KEY_PRESS_LEFT] = loadSurface ("left.bmp");
 
-    if (keySurfaces [KEY_PRESS_LEFT] == NULL) {
+    if (gKeyPressSurfaces [KEY_PRESS_LEFT] == NULL) {
     
 		//{---LOG---failed to load left image
 		logEvents();
@@ -152,9 +152,9 @@ bool mediaHandler() {
     }
 
     //Load right surface
-    keySurfaces [KEY_PRESS_RIGHT] = loadSurface ("right.bmp");
+    gKeyPressSurfaces [KEY_PRESS_RIGHT] = loadSurface ("right.bmp");
 
-    if (keySurfaces [KEY_PRESS_RIGHT] == NULL) {
+    if (gKeyPressSurfaces [KEY_PRESS_RIGHT] == NULL) {
     
 		//{---LOG---failed to load right image
 		logEvents();
@@ -184,7 +184,7 @@ SDL_Surface* loadSurface (std::string path) {
 	} else {
 		
 		//Convert surface to screen format
-		optimizedSurface = SDL_ConvertSurface (loadedSurface, windowSurface->format, NULL);
+		optimizedSurface = SDL_ConvertSurface (loadedSurface, gScreenSurface->format, NULL);
 		if (optimizedSurface == NULL) {
 			
 			//{---LOG---unable to optimize image
@@ -203,12 +203,12 @@ void closeSDLHandler() {
 	
 	//Deallocate surface
 	for (int i = 0; i < KEY_PRESS_TOTAL; ++i) {
-		SDL_FreeSurface (keySurfaces [i]);
-		keySurfaces[i] = NULL;
+		SDL_FreeSurface (gKeyPressSurfaces [i]);
+		gKeyPressSurfaces[i] = NULL;
 	}	
 	
-	SDL_DestroyWindow (windowHandler);
-	windowHandler = NULL;
+	SDL_DestroyWindow (gWindow);
+	gWindow = NULL;
 	
 	SDL_Quit();
 } //}
