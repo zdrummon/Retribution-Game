@@ -1,8 +1,11 @@
 #pragma once
 
 //{---CONSTANTS
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 320;
+const int SCREEN_HEIGHT = 320;
+
+const int MAP_WIDTH = 10;
+const int MAP_HEIGHT = 10;
 
 enum KeyPress {
     KEY_PRESS_DEFAULT,
@@ -11,15 +14,23 @@ enum KeyPress {
     KEY_PRESS_LEFT,
     KEY_PRESS_RIGHT,
     KEY_PRESS_TOTAL
+};
+
+enum MapTile {
+    MAP_TILE_DEFAULT,
+    MAP_TILE_WALL,
+    MAP_TILE_FLOOR,
+    MAP_TILE_TOTAL
 }; //}
 
 //{---Variables
 int logCount;
 clock_t startTicker;
 clock_t totalTicks;
-double ticksInSeconds; //}
+double ticksInSeconds; 
+int mapData[MAP_WIDTH][MAP_HEIGHT]; //}
 
-//{---Handler pointers
+//{---Pointers and objects
 //Loads individual image
 SDL_Surface* loadSurface (std::string path);
 
@@ -30,15 +41,22 @@ SDL_Window* windowHandler = NULL;
 SDL_Surface* windowSurface = NULL;
 
 //The images that correspond to a keypress
-SDL_Surface* keySurfaces [KEY_PRESS_TOTAL];
+SDL_Surface* mapSurfaces [MAP_TILE_TOTAL];
 
 //Current displayed image
-SDL_Surface* currentSurface = NULL; //}
+SDL_Surface* currentSurface = NULL; 
+
+//}
 
 //{---Function prototypes
+void logEvents();
 bool initSDLHandler();
 bool mediaHandler();
-void closeSDLHandler(); //}
+void closeSDLHandler();
+void runGame();
+void mapPopulator();
+void mapGraphicsPopulator();
+void mapGraphicsPrinter(); //}
 
 //{---Functions
 void logEvents() {
@@ -104,9 +122,9 @@ bool mediaHandler() {
     bool initSuccess = true;
 	
     //Load default surface
-    keySurfaces [KEY_PRESS_DEFAULT] = loadSurface ("default.bmp");
+    mapSurfaces [MAP_TILE_DEFAULT] = loadSurface ("empty_space.bmp");
     
-	if (keySurfaces [KEY_PRESS_DEFAULT] == NULL) {
+	if (mapSurfaces [MAP_TILE_DEFAULT] == NULL) {
     
 		//{---LOG---failed to load default image
 		logEvents();
@@ -115,55 +133,167 @@ bool mediaHandler() {
         initSuccess = false;
     }
 
-    //Load up surface
-    keySurfaces [KEY_PRESS_UP] = loadSurface ("up.bmp");
+    //Load wall surface
+    mapSurfaces [MAP_TILE_WALL] = loadSurface ("stone_space.bmp");
 
-    if (keySurfaces [KEY_PRESS_UP] == NULL) {
+    if (mapSurfaces [MAP_TILE_WALL] == NULL) {
     
-		//{---LOG---failed to load up image
+		//{---LOG---failed to load wall image
 		logEvents();
-		printf ("Failed to load up image!"); //}
+		printf ("Failed to load wall image!"); //}
 		
         initSuccess = false;
     }
 
-    //Load down surface
-    keySurfaces [KEY_PRESS_DOWN] = loadSurface ("down.bmp");
+    //Load floor surface
+    mapSurfaces [MAP_TILE_FLOOR] = loadSurface ("dirt_space.bmp");
     
-	if (keySurfaces [KEY_PRESS_DOWN] == NULL) {
+	if (mapSurfaces [MAP_TILE_FLOOR] == NULL) {
     
-		//{---LOG---failed to load down image
+		//{---LOG---failed to load floor image
 		logEvents();
-		printf ("Failed to load down image!"); //}
-		
-        initSuccess = false;
-    }
-
-    //Load left surface
-    keySurfaces [KEY_PRESS_LEFT] = loadSurface ("left.bmp");
-
-    if (keySurfaces [KEY_PRESS_LEFT] == NULL) {
-    
-		//{---LOG---failed to load left image
-		logEvents();
-		printf ("Failed to load left image!"); //}
-		
-        initSuccess = false;
-    }
-
-    //Load right surface
-    keySurfaces [KEY_PRESS_RIGHT] = loadSurface ("right.bmp");
-
-    if (keySurfaces [KEY_PRESS_RIGHT] == NULL) {
-    
-		//{---LOG---failed to load right image
-		logEvents();
-		printf ("Failed to load right image!"); //}
+		printf ("Failed to load floor image!"); //}
 		
         initSuccess = false;
     }
 	
 	return initSuccess;
+}
+
+void closeSDLHandler() {
+	
+	//Deallocate surface
+	for (int i = 0; i < MAP_TILE_TOTAL; ++i) {
+		SDL_FreeSurface (mapSurfaces [i]);
+		mapSurfaces[i] = NULL;
+	}	
+	
+	SDL_DestroyWindow (windowHandler);
+	windowHandler = NULL;
+	
+	SDL_Quit();
+}
+
+void runGame() {
+	
+    bool quitFlag = false;
+	
+	mapPopulator();
+	
+	SDL_Event eventHandler;
+
+    while (!quitFlag) {
+		
+		//Handle events on queue
+        while (SDL_PollEvent (&eventHandler) != 0) {
+			//User requests quit
+			if (eventHandler.type == SDL_QUIT) {
+				
+				quitFlag = true;	
+				
+				//{---LOG---quit flag has been set
+				logEvents();
+				printf ("quit flag has been set"); //}
+			}
+			
+			//User presses a key
+			if (eventHandler.type == SDL_KEYDOWN) {
+				
+				//Select surfaces based on key press
+				switch (eventHandler.key.keysym.sym) {
+					
+					case SDLK_UP:
+						//{---LOG---up key pressed
+						logEvents();
+						printf ("up key pressed"); //}
+					break;
+		
+					case SDLK_DOWN:
+						//{---LOG---down key pressed
+						logEvents();
+						printf ("down key pressed"); //}	
+					break;
+		
+					case SDLK_LEFT:
+						//{---LOG---left key pressed
+						logEvents();
+						printf ("left key pressed"); //}	
+					break;
+		
+					case SDLK_RIGHT:
+						//{---LOG---right key pressed
+						logEvents();
+						printf ("right key pressed"); //}	
+					break;
+		
+					default:	
+						//empty
+					break;
+				}
+			}	
+		}
+		
+		mapGraphicsPrinter();	
+	}
+}
+
+//BROKEN due to visibility
+//void eventOrganizer() { }
+
+void mapPopulator() {
+	
+	for (int i = 0; i < MAP_WIDTH; i++) {
+		for (int j = 0; j < MAP_HEIGHT; j++) {
+			
+			if ( (i == 0 || i == MAP_WIDTH - 1) ||
+				 (j == 0 || j == MAP_HEIGHT - 1) ) {
+					 
+				mapData[i][j] = MAP_TILE_WALL;
+		
+			} else {
+			
+				mapData[i][j] = MAP_TILE_FLOOR;
+			}
+		}
+	}
+}
+
+void mapGraphicsPrinter() {
+
+	SDL_Rect imageTransform;
+	
+	//Apply the map array stretched
+	for (int i = 0; i < MAP_WIDTH; i++) {
+		for (int j = 0; j < MAP_HEIGHT; j++) {
+			
+			if (mapData[i][j] == MAP_TILE_DEFAULT) {
+				
+				currentSurface = mapSurfaces [MAP_TILE_DEFAULT];
+				
+			} else if (mapData[i][j] == MAP_TILE_WALL) {
+				
+				currentSurface = mapSurfaces [MAP_TILE_WALL]; 	
+				
+			} else if (mapData[i][j] == MAP_TILE_FLOOR) {
+				
+				currentSurface = mapSurfaces [MAP_TILE_FLOOR];
+				
+			} else {
+				
+				//{---LOG---failed to load default image
+				logEvents();
+				printf ("Map data missing at %i, %i", i, j); //}
+			}
+			
+			//Current image positioner
+			imageTransform.x = i * 32;
+			imageTransform.y = j * 32;
+			imageTransform.w = 32;
+			imageTransform.h = 32;
+			SDL_BlitScaled (currentSurface, NULL, windowSurface, &imageTransform);
+			SDL_UpdateWindowSurface (windowHandler);
+		}
+	}
 }
 
 //Loads individual image
@@ -198,17 +328,3 @@ SDL_Surface* loadSurface (std::string path) {
 
 	return optimizedSurface;
 }
-
-void closeSDLHandler() {
-	
-	//Deallocate surface
-	for (int i = 0; i < KEY_PRESS_TOTAL; ++i) {
-		SDL_FreeSurface (keySurfaces [i]);
-		keySurfaces[i] = NULL;
-	}	
-	
-	SDL_DestroyWindow (windowHandler);
-	windowHandler = NULL;
-	
-	SDL_Quit();
-} //}
