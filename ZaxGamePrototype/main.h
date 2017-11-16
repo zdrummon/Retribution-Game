@@ -1,11 +1,12 @@
 #pragma once
 
 //{---CONSTANTS
-const int SCREEN_WIDTH = 320;
-const int SCREEN_HEIGHT = 320;
-
 const int MAP_WIDTH = 10;
 const int MAP_HEIGHT = 10;
+const int TILE_WIDTH = 32;
+const int TILE_HEIGHT = 32;
+const int SCREEN_WIDTH = TILE_WIDTH * MAP_WIDTH;
+const int SCREEN_HEIGHT = TILE_HEIGHT * MAP_HEIGHT;
 
 enum KeyPress {
     KEY_PRESS_DEFAULT,
@@ -20,6 +21,7 @@ enum MapTile {
     MAP_TILE_DEFAULT,
     MAP_TILE_WALL,
     MAP_TILE_FLOOR,
+	MAP_TILE_PLAYER,
     MAP_TILE_TOTAL
 }; //}
 
@@ -28,7 +30,7 @@ int logCount;
 clock_t startTicker;
 clock_t totalTicks;
 double ticksInSeconds; 
-int mapData[MAP_WIDTH][MAP_HEIGHT]; //}
+int mapData[MAP_WIDTH][MAP_HEIGHT][2]; //}
 
 //{---Pointers and objects
 //Loads individual image
@@ -44,9 +46,7 @@ SDL_Surface* windowSurface = NULL;
 SDL_Surface* mapSurfaces [MAP_TILE_TOTAL];
 
 //Current displayed image
-SDL_Surface* currentSurface = NULL; 
-
-//}
+SDL_Surface* currentSurface = NULL; //}
 
 //{---Function prototypes
 void logEvents();
@@ -54,8 +54,8 @@ bool initSDLHandler();
 bool mediaHandler();
 void closeSDLHandler();
 void runGame();
+void mapMove(int moveX, int moveY);
 void mapPopulator();
-void mapGraphicsPopulator();
 void mapGraphicsPrinter(); //}
 
 //{---Functions
@@ -83,7 +83,7 @@ bool initSDLHandler() {
     } else {
         
 		//Create window
-        windowHandler = SDL_CreateWindow ("SOFTWARE I WROTE WHILE POOPING", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        windowHandler = SDL_CreateWindow ("Karate Chess 0.0.0.4", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		
 		if (windowHandler == NULL) {
 
@@ -122,38 +122,42 @@ bool mediaHandler() {
     bool initSuccess = true;
 	
     //Load default surface
-    mapSurfaces [MAP_TILE_DEFAULT] = loadSurface ("empty_space.bmp");
-    
+    mapSurfaces [MAP_TILE_DEFAULT] = loadSurface ("empty_space.bmp");   
 	if (mapSurfaces [MAP_TILE_DEFAULT] == NULL) {
     
 		//{---LOG---failed to load default image
 		logEvents();
 		printf ("Failed to load default image!"); //}
-		
         initSuccess = false;
     }
 
     //Load wall surface
     mapSurfaces [MAP_TILE_WALL] = loadSurface ("stone_space.bmp");
-
     if (mapSurfaces [MAP_TILE_WALL] == NULL) {
     
 		//{---LOG---failed to load wall image
 		logEvents();
 		printf ("Failed to load wall image!"); //}
-		
         initSuccess = false;
     }
 
     //Load floor surface
-    mapSurfaces [MAP_TILE_FLOOR] = loadSurface ("dirt_space.bmp");
-    
+    mapSurfaces [MAP_TILE_FLOOR] = loadSurface ("dirt_space.bmp");    
 	if (mapSurfaces [MAP_TILE_FLOOR] == NULL) {
     
 		//{---LOG---failed to load floor image
 		logEvents();
 		printf ("Failed to load floor image!"); //}
-		
+        initSuccess = false;
+    }
+	
+	//Load floor surface
+    mapSurfaces [MAP_TILE_PLAYER] = loadSurface ("player_character.bmp");    
+	if (mapSurfaces [MAP_TILE_PLAYER] == NULL) {
+    
+		//{---LOG---failed to load player image
+		logEvents();
+		printf ("Failed to load player image!"); //}
         initSuccess = false;
     }
 	
@@ -206,24 +210,28 @@ void runGame() {
 						//{---LOG---up key pressed
 						logEvents();
 						printf ("up key pressed"); //}
+						mapMove (0,-1);
 					break;
 		
 					case SDLK_DOWN:
 						//{---LOG---down key pressed
 						logEvents();
-						printf ("down key pressed"); //}	
+						printf ("down key pressed"); //}
+						mapMove (0,1);						
 					break;
 		
 					case SDLK_LEFT:
 						//{---LOG---left key pressed
 						logEvents();
 						printf ("left key pressed"); //}	
+						mapMove (-1,0);
 					break;
 		
 					case SDLK_RIGHT:
 						//{---LOG---right key pressed
 						logEvents();
 						printf ("right key pressed"); //}	
+						mapMove (1,0);
 					break;
 		
 					default:	
@@ -234,6 +242,21 @@ void runGame() {
 		}
 		
 		mapGraphicsPrinter();	
+	}
+}
+
+void mapMove (int moveX, int moveY) {
+
+	for (int i = 0; i < MAP_WIDTH; i++) {
+		for (int j = 0; j < MAP_HEIGHT; j++) {
+			if ((mapData[i][j][1] == MAP_TILE_PLAYER) && (mapData[i + moveX][j + moveY][0] != MAP_TILE_WALL)) {
+				
+				mapData[i][j][1] = NULL;
+				mapData[i + moveX][j + moveY][1] = MAP_TILE_PLAYER;
+				i = MAP_WIDTH;
+				j = MAP_HEIGHT;
+			}
+		}
 	}
 }
 
@@ -248,14 +271,16 @@ void mapPopulator() {
 			if ( (i == 0 || i == MAP_WIDTH - 1) ||
 				 (j == 0 || j == MAP_HEIGHT - 1) ) {
 					 
-				mapData[i][j] = MAP_TILE_WALL;
+				mapData[i][j][0] = MAP_TILE_WALL;
 		
 			} else {
 			
-				mapData[i][j] = MAP_TILE_FLOOR;
+				mapData[i][j][0] = MAP_TILE_FLOOR;
 			}
 		}
 	}
+	
+	mapData[MAP_WIDTH / 2][MAP_HEIGHT / 2][1] = MAP_TILE_PLAYER;
 }
 
 void mapGraphicsPrinter() {
@@ -266,15 +291,15 @@ void mapGraphicsPrinter() {
 	for (int i = 0; i < MAP_WIDTH; i++) {
 		for (int j = 0; j < MAP_HEIGHT; j++) {
 			
-			if (mapData[i][j] == MAP_TILE_DEFAULT) {
+			if (mapData[i][j][1] == MAP_TILE_PLAYER) {
 				
-				currentSurface = mapSurfaces [MAP_TILE_DEFAULT];
+				currentSurface = mapSurfaces [MAP_TILE_PLAYER];
 				
-			} else if (mapData[i][j] == MAP_TILE_WALL) {
+			} else if (mapData[i][j][0] == MAP_TILE_WALL) {
 				
 				currentSurface = mapSurfaces [MAP_TILE_WALL]; 	
 				
-			} else if (mapData[i][j] == MAP_TILE_FLOOR) {
+			} else if (mapData[i][j][0] == MAP_TILE_FLOOR) {
 				
 				currentSurface = mapSurfaces [MAP_TILE_FLOOR];
 				
@@ -286,10 +311,10 @@ void mapGraphicsPrinter() {
 			}
 			
 			//Current image positioner
-			imageTransform.x = i * 32;
-			imageTransform.y = j * 32;
-			imageTransform.w = 32;
-			imageTransform.h = 32;
+			imageTransform.x = i * TILE_WIDTH;
+			imageTransform.y = j * TILE_HEIGHT;
+			imageTransform.w = TILE_WIDTH;
+			imageTransform.h = TILE_HEIGHT;
 			SDL_BlitScaled (currentSurface, NULL, windowSurface, &imageTransform);
 			SDL_UpdateWindowSurface (windowHandler);
 		}
@@ -328,3 +353,4 @@ SDL_Surface* loadSurface (std::string path) {
 
 	return optimizedSurface;
 }
+
