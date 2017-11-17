@@ -5,31 +5,31 @@
 #include <stdio.h>
 #include <string>
 //headers
-#include "main.h"
+//#include "main.h"
+#include "LogHandler.h"
+//#include "GraphicsHandler.h"
 //namespaces
 using namespace std;
 //main class body
 int main (int argc, char* args[]) {
 	
 	srand(time(NULL));
-
-	//{---LOG---start debug log
-	startTicker = clock();
-	logCount = 0;
-	printf ("\n DEBUG LOG\n =============================="); //}
-	
-	if (!initSDLHandler()) {
+	LogHandler Log;
+	Log.logStart();
+	Log.logEvents();
+	/*
+	if (!GraphicsHandler::initSDLHandler()) {
 		
 		//{---LOG---failed to initialize SDL
-		logEvents();
+		LogHandler::logEvents();
 		printf ("failed to initialize SDL!"); //}
 	
 	} else {
 		
-		if (!mediaHandler()) {
+		if (!GraphicsHandler::mediaHandler()) {
 			
 			//{---LOG---failed to load media
-			logEvents();
+			LogHandler::logEvents();
 			printf ("failed to load media!"); //}
 			
 		} else {
@@ -38,11 +38,8 @@ int main (int argc, char* args[]) {
 		}
 	}
 
-	void closeSDLHandler();
-	
-	//{---LOG---program has ended
-	logEvents();
-	printf ("program has ended\n ==============================\n"); //}
-
+	GraphicsHandler::closeSDLHandler();	\
+	*/
+	Log.logEnd();
 	return 0;			
 }

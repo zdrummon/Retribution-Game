@@ -1,5 +1,5 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = main.cpp StartGame.cpp RunGame.cpp MapTerrain.cpp ExitGame.cpp
+OBJS = main.cpp LogHandler.cpp 
 
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = KarateChess
