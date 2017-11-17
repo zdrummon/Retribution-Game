@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include <string>
 //headers
-//#include "main.h"
+#include "main.h"
 #include "LogHandler.h"
-//#include "GraphicsHandler.h"
+#include "GraphicsHandler.h"
 //namespaces
 using namespace std;
 //main class body
@@ -17,11 +17,11 @@ int main (int argc, char* args[]) {
 	LogHandler Log;
 	Log.logStart();
 	Log.logEvents();
-	/*
+	
 	if (!GraphicsHandler::initSDLHandler()) {
 		
 		//{---LOG---failed to initialize SDL
-		LogHandler::logEvents();
+		Log.logEvents();
 		printf ("failed to initialize SDL!"); //}
 	
 	} else {
@@ -29,17 +29,17 @@ int main (int argc, char* args[]) {
 		if (!GraphicsHandler::mediaHandler()) {
 			
 			//{---LOG---failed to load media
-			LogHandler::logEvents();
+			Log.logEvents();
 			printf ("failed to load media!"); //}
 			
 		} else {
 			
-			runGame();
+			//runGame();
 		}
 	}
 
 	GraphicsHandler::closeSDLHandler();	\
-	*/
+	
 	Log.logEnd();
 	return 0;			
 }

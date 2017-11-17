@@ -7,8 +7,8 @@
 #include "LogHandler.h"
 namespace GraphicsHandler {
 	
-const int MAP_WIDTH = 10;
-const int MAP_HEIGHT = 10;
+const int MAP_WIDTH_SET = 10;
+const int MAP_HEIGHT_SET = 10;
 const int TILE_WIDTH = 32;
 const int TILE_HEIGHT = 32;
 const int SCREEN_WIDTH = TILE_WIDTH * MAP_WIDTH;
@@ -199,8 +199,8 @@ void mapGraphicsPrinter() {
 	SDL_Rect imageTransform;
 	
 	//Apply the map array stretched
-	for (int i = 0; i < MAP_WIDTH; i++) {
-		for (int j = 0; j < MAP_HEIGHT; j++) {
+	for (int i = 0; i < MAP_WIDTH_SET; i++) {
+		for (int j = 0; j < MAP_HEIGHT_SET; j++) {
 			
 			if (mapData[i][j][1] == MAP_TILE_PLAYER) {
 				

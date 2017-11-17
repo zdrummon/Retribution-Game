@@ -22,9 +22,13 @@ enum MapTile {
     MAP_TILE_TOTAL
 }; //}
 
+const int MAP_WIDTH=10;
+const int MAP_HEIGHT=10;
+
 //{---Variables
 
-int mapData[GraphicsHandler::MAP_WIDTH][GraphicsHandler::MAP_HEIGHT][2];
+
+int mapData[MAP_WIDTH][MAP_HEIGHT][2];
 int playerPositionX;
 int playerPositionY;
 int enemyPositionX;
@@ -47,7 +51,7 @@ void mapGraphicsPrinter(); //}
 
 
 
-
+/*
 void runGame() {
 	
     bool quitFlag = false;
@@ -115,7 +119,7 @@ void runGame() {
 			}	
 		}
 		
-		GraphicsHandler::mapGraphicsPrinter();	
+		mapGraphicsPrinter();	
 	}
 }
 
@@ -262,6 +266,12 @@ void mapPopulator() {
 	mapData[GraphicsHandler::MAP_WIDTH / 2][GraphicsHandler::MAP_HEIGHT / 2][1] = MAP_TILE_PLAYER;
 	mapData[GraphicsHandler::MAP_WIDTH / 4][GraphicsHandler::MAP_HEIGHT / 4][1] = MAP_TILE_ENEMY;
 }
+*/
+
+
+
+
+
 
 
 
