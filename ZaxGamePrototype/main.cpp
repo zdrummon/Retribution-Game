@@ -10,6 +10,8 @@
 using namespace std;
 //main class body
 int main (int argc, char* args[]) {
+	
+	srand(time(NULL));
 
 	//{---LOG---start debug log
 	startTicker = clock();

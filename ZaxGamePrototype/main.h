@@ -22,6 +22,7 @@ enum MapTile {
     MAP_TILE_WALL,
     MAP_TILE_FLOOR,
 	MAP_TILE_PLAYER,
+	MAP_TILE_ENEMY,
     MAP_TILE_TOTAL
 }; //}
 
@@ -30,7 +31,11 @@ int logCount;
 clock_t startTicker;
 clock_t totalTicks;
 double ticksInSeconds; 
-int mapData[MAP_WIDTH][MAP_HEIGHT][2]; //}
+int mapData[MAP_WIDTH][MAP_HEIGHT][2];
+int playerPositionX;
+int playerPositionY;
+int enemyPositionX;
+int enemyPositionY; //}
 
 //{---Pointers and objects
 //Loads individual image
@@ -55,6 +60,7 @@ bool mediaHandler();
 void closeSDLHandler();
 void runGame();
 void mapMove(int moveX, int moveY);
+void enemyMove();
 void mapPopulator();
 void mapGraphicsPrinter(); //}
 
@@ -83,7 +89,7 @@ bool initSDLHandler() {
     } else {
         
 		//Create window
-        windowHandler = SDL_CreateWindow ("Karate Chess 0.0.0.4", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        windowHandler = SDL_CreateWindow ("Karate Chess 0.0.0.5", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		
 		if (windowHandler == NULL) {
 
@@ -161,6 +167,16 @@ bool mediaHandler() {
         initSuccess = false;
     }
 	
+	//Load floor surface
+    mapSurfaces [MAP_TILE_ENEMY] = loadSurface ("enemy_character.bmp");    
+	if (mapSurfaces [MAP_TILE_ENEMY] == NULL) {
+    
+		//{---LOG---failed to load enemy image
+		logEvents();
+		printf ("Failed to load enemy image!"); //}
+        initSuccess = false;
+    }
+	
 	return initSuccess;
 }
 
@@ -211,13 +227,15 @@ void runGame() {
 						logEvents();
 						printf ("up key pressed"); //}
 						mapMove (0,-1);
+						enemyMove();
 					break;
 		
 					case SDLK_DOWN:
 						//{---LOG---down key pressed
 						logEvents();
 						printf ("down key pressed"); //}
-						mapMove (0,1);						
+						mapMove (0,1);
+						enemyMove();
 					break;
 		
 					case SDLK_LEFT:
@@ -225,6 +243,7 @@ void runGame() {
 						logEvents();
 						printf ("left key pressed"); //}	
 						mapMove (-1,0);
+						enemyMove();
 					break;
 		
 					case SDLK_RIGHT:
@@ -232,6 +251,7 @@ void runGame() {
 						logEvents();
 						printf ("right key pressed"); //}	
 						mapMove (1,0);
+						enemyMove();
 					break;
 		
 					default:	
@@ -249,10 +269,115 @@ void mapMove (int moveX, int moveY) {
 
 	for (int i = 0; i < MAP_WIDTH; i++) {
 		for (int j = 0; j < MAP_HEIGHT; j++) {
-			if ((mapData[i][j][1] == MAP_TILE_PLAYER) && (mapData[i + moveX][j + moveY][0] != MAP_TILE_WALL)) {
+			
+			
+			
+			if ((mapData[i][j][1] == MAP_TILE_PLAYER) && 
+				(mapData[i + moveX][j + moveY][0] != MAP_TILE_WALL) &&
+				(mapData[i + moveX][j + moveY][1] != MAP_TILE_ENEMY)) {
 				
 				mapData[i][j][1] = NULL;
 				mapData[i + moveX][j + moveY][1] = MAP_TILE_PLAYER;
+				playerPositionX = i + moveX;
+				playerPositionY = j + moveY;
+				i = MAP_WIDTH;
+				j = MAP_HEIGHT;
+			
+			} 
+			if ((mapData[i][j][1] == MAP_TILE_PLAYER) && (mapData[i + moveX][j + moveY][1] == MAP_TILE_ENEMY)) {
+				
+				mapData[i + moveX][j + moveY][1] = NULL;
+				i = MAP_WIDTH;
+				j = MAP_HEIGHT;
+			}	
+		}
+	}
+}
+
+void enemyMove() {
+	
+	int moveX = 0;
+	int moveY = 0;
+	
+	int moveToPlayer = rand() % 2;
+	int moveRandomDirection = rand() % 5;
+	
+	if (moveToPlayer == 0) {
+		if (moveRandomDirection == 0) {
+			
+			moveX = 0;
+			moveY = -1;
+			
+		} else if (moveRandomDirection == 1) {
+		
+			moveX = 1;
+			moveY = 0;
+		
+		} else if (moveRandomDirection == 2) {
+		
+			moveX = 0;
+			moveY = 1;		
+		
+		} else if (moveRandomDirection == 3) {
+
+			moveX = -1;
+			moveY = 0;
+
+		} else if (moveRandomDirection == 4) {
+		
+			moveX = 0;
+			moveY = 0;
+		}
+	
+	} else {
+		
+		for (int i = 0; i < MAP_WIDTH; i++) {
+			for (int j = 0; j < MAP_HEIGHT; j++) {
+				if (mapData[i][j][1] == MAP_TILE_ENEMY) {
+					enemyPositionX = i;
+					enemyPositionY = j;
+				}
+			}
+		}
+		
+		if (playerPositionX > enemyPositionX) {
+			
+			moveX = 1;
+			moveY = 0;
+			
+		} else if (playerPositionX < enemyPositionX) {
+		
+			moveX = -1;
+			moveY = 0;
+		
+		} else if (playerPositionY > enemyPositionY) {
+		
+			moveX = 0;
+			moveY = 1;		
+		
+		} else if (playerPositionY < enemyPositionY) {
+
+			moveX = 0;
+			moveY = -1;
+
+		}
+	}
+	
+	for (int i = 0; i < MAP_WIDTH; i++) {
+		for (int j = 0; j < MAP_HEIGHT; j++) {
+			if ((mapData[i][j][1] == MAP_TILE_ENEMY) && 
+				(mapData[i + moveX][j + moveY][0] != MAP_TILE_WALL) &&
+				(mapData[i + moveX][j + moveY][1] != MAP_TILE_PLAYER)) {
+					
+				mapData[i][j][1] = NULL;
+				mapData[i + moveX][j + moveY][1] = MAP_TILE_ENEMY;
+				i = MAP_WIDTH;
+				j = MAP_HEIGHT;
+				
+			} else if ((mapData[i][j][1] == MAP_TILE_ENEMY) && 
+					   (mapData[i + moveX][j + moveY][1] == MAP_TILE_PLAYER)) {
+				
+				mapData[i + moveX][j + moveY][1] = NULL;
 				i = MAP_WIDTH;
 				j = MAP_HEIGHT;
 			}
@@ -281,6 +406,7 @@ void mapPopulator() {
 	}
 	
 	mapData[MAP_WIDTH / 2][MAP_HEIGHT / 2][1] = MAP_TILE_PLAYER;
+	mapData[MAP_WIDTH / 4][MAP_HEIGHT / 4][1] = MAP_TILE_ENEMY;
 }
 
 void mapGraphicsPrinter() {
@@ -294,6 +420,10 @@ void mapGraphicsPrinter() {
 			if (mapData[i][j][1] == MAP_TILE_PLAYER) {
 				
 				currentSurface = mapSurfaces [MAP_TILE_PLAYER];
+				
+			} else if (mapData[i][j][1] == MAP_TILE_ENEMY) {
+				
+				currentSurface = mapSurfaces [MAP_TILE_ENEMY];
 				
 			} else if (mapData[i][j][0] == MAP_TILE_WALL) {
 				
