@@ -1,37 +1,45 @@
 //libraries
+#include <SDL.h>
+#include <SDL_image.h>
+#include <ctime>
+#include <stdio.h>
+#include <string>
 //headers
-#include "StartGame.h"
-#include "MapGenerator.h"
-#include "RunGame.h"
-#include "Exitgame.h"
+//#include "main.h"
+#include "LogHandler.h"
+//#include "GraphicsHandler.h"
 //namespaces
 using namespace std;
-//class body
-int main() {
+//main class body
+int main (int argc, char* args[]) {
 	
-	//start the game
-	StartGame StartGameObject;
-	StartGameObject.graphicsHandler();
-	StartGameObject.uiHandler();
-	StartGameObject.startScreen(0,0,0,3);
-	StartGameObject.startMenu();
-	StartGameObject.inputHandler();
-	StartGameObject.outputHandler();
+//	srand(time(NULL));
+	LogHandler Log;
+	Log.logStart();
+	Log.logEvent();
 	
-	if (StartGameObject.startMenu() == 1) {	
-		
-		//generate the map
-		MapGenerator MapGeneratorObject;
-		//MapGeneratorObject.mapGeneration();
-		
-		//run the game
-		RunGame RunGameObject;
-		RunGameObject.playGame();
+//	if (!GraphicsHandler::initSDLHandler()) {
+//		
+//		//{---LOG---failed to initialize SDL
+//		Log.logEvents();
+//		printf ("failed to initialize SDL!"); //}
+//	
+//	} else {
+//		
+//		if (!GraphicsHandler::mediaHandler()) {
+//			
+//			//{---LOG---failed to load media
+//			Log.logEvents();
+//			printf ("failed to load media!"); //}
+//			
+//		} else {
+//			
+//			//runGame();
+//		}
+//	}
+//
+//	GraphicsHandler::closeSDLHandler();
 	
-	}
-	
-	//exit the game
-	ExitGame ExitGameObject;
-	ExitGameObject.exitScreen();
-	return 0;	
+	Log.logEnd();
+	return 0;			
 }
