@@ -2,6 +2,7 @@
 _localtemp/*
 
 # Executables
+KarateChess.exe
 *.exe
 
 # DLL files
