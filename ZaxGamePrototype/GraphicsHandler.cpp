@@ -5,7 +5,7 @@
 #include <string>
 //headers
 #include "LogHandler.h"
-namespace GraphicsHandler {
+
 	
 const int MAP_WIDTH_SET = 10;
 const int MAP_HEIGHT_SET = 10;
@@ -21,8 +21,9 @@ enum MapTile {
 	MAP_TILE_PLAYER,
 	MAP_TILE_ENEMY,
     MAP_TILE_TOTAL
-}; //}
+};
 
+//{ objects/pointers
 //Loads individual image
 SDL_Surface* loadSurface (std::string path);
 
@@ -36,9 +37,7 @@ SDL_Surface* windowSurface = NULL;
 SDL_Surface* mapSurfaces [MAP_TILE_TOTAL];
 
 //Current displayed image
-SDL_Surface* currentSurface = NULL; //}
-
-	
+SDL_Surface* currentSurface = NULL; //}	
 	
 bool initSDLHandler() {
 	
@@ -161,39 +160,6 @@ void closeSDLHandler() {
 	SDL_Quit();
 }
 
-//Loads individual image
-SDL_Surface* loadSurface (std::string path) {
-	
-	//The final optimized image
-	SDL_Surface* optimizedSurface = NULL;
-    
-	//Load image at specified path
-    SDL_Surface* loadedSurface = SDL_LoadBMP (path.c_str());
-    
-	if (loadedSurface == NULL) {
-        
-		//{---LOG---unable to load image
-		LogHandler::logEvents();
-		printf ("Unable to load image %s! SDL Error: %s", path.c_str(), SDL_GetError()); //}
-    
-	} else {
-		
-		//Convert surface to screen format
-		optimizedSurface = SDL_ConvertSurface (loadedSurface, windowSurface->format, NULL);
-		if (optimizedSurface == NULL) {
-			
-			//{---LOG---unable to optimize image
-			LogHandler::logEvents();
-			printf ("Unable to optimize image %s! SDL Error: %s", path.c_str(), SDL_GetError());
-		}
-
-		//Get rid of old loaded surface
-		SDL_FreeSurface (loadedSurface);
-	}
-
-	return optimizedSurface;
-}
-
 void mapGraphicsPrinter() {
 
 	SDL_Rect imageTransform;
@@ -235,4 +201,36 @@ void mapGraphicsPrinter() {
 		}
 	}
 }
+
+//Loads individual image
+SDL_Surface* loadSurface (std::string path) {
+	
+	//The final optimized image
+	SDL_Surface* optimizedSurface = NULL;
+	
+	//Load image at specified path
+	SDL_Surface* loadedSurface = SDL_LoadBMP (path.c_str());
+	
+	if (loadedSurface == NULL) {
+		
+		//{---LOG---unable to load image
+		LogHandler::logEvents();
+		printf ("Unable to load image %s! SDL Error: %s", path.c_str(), SDL_GetError()); //}
+	
+	} else {
+		
+		//Convert surface to screen format
+		optimizedSurface = SDL_ConvertSurface (loadedSurface, windowSurface->format, NULL);
+		if (optimizedSurface == NULL) {
+			
+			//{---LOG---unable to optimize image
+			LogHandler::logEvents();
+			printf ("Unable to optimize image %s! SDL Error: %s", path.c_str(), SDL_GetError());
+		}
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface (loadedSurface);
+	}
+
+	return optimizedSurface;
 }

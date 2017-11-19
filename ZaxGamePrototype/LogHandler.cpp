@@ -7,25 +7,25 @@
 //namespaces
 using namespace std;
 
+LogHandler::LogHandler() {}
 
-		
-	void LogHandler::logStart() {
-		
-		startTicker = clock();
-		logCount = 0;
-		printf ("\n DEBUG LOG\n =============================="); 
-	}
+void LogHandler::logStart() {
 	
-	void LogHandler::logEvents() {
-		
-		++logCount;
-		totalTicks = clock() - startTicker;
-		ticksInSeconds = totalTicks / (double) CLOCKS_PER_SEC;
-		printf ("\n [Event %.6i - %.3f seconds]: ", logCount, ticksInSeconds);
-	}
+	startTicker = clock();
+	logCount = 0;
+	printf ("\n DEBUG LOG\n =============================="); 
+}
+
+void LogHandler::logEvent() {
 	
-	void LogHandler::logEnd() {
-		
-		logEvents();
-		printf ("program has ended\n ==============================\n");
-	}
+	++logCount;
+	totalTicks = clock() - startTicker;
+	ticksInSeconds = totalTicks / (double) CLOCKS_PER_SEC;
+	printf ("\n [Event %.6i - %.3f seconds]: %s", logCount, ticksInSeconds);
+}
+
+void LogHandler::logEnd() {
+	
+	logEvent();
+	printf ("program has ended\n ==============================\n");
+}
