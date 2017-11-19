@@ -1,5 +1,5 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = main.cpp LogHandler.cpp 
+OBJS = source/main.cpp source/LogHandler.cpp 
 
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = KarateChess
@@ -17,7 +17,7 @@ COMPILER_FLAGS = -w -Wl,-subsystem,windows
 
 #LINKER_FLAGS specifies the libraries we're linking against
 LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2 
-#-lSDL2_image for later lib inclusion
+#TODO -lSDL2_image for later lib inclusion
 
 #This is the target that compiles our executable
 all : $(OBJS)

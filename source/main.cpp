@@ -5,18 +5,18 @@
 #include <stdio.h>
 #include <string>
 //headers
-//#include "main.h"
-#include "LogHandler.h"
-//#include "GraphicsHandler.h"
+//#include "headers/main.h"
+#include "headers/LogHandler.h"
+//#include "headers/GraphicsHandler.h"
 //namespaces
 using namespace std;
 //main class body
 int main (int argc, char* args[]) {
 	
-//	srand(time(NULL));
+	srand(time(NULL));
+	
 	LogHandler Log;
 	Log.logStart();
-	Log.logEvent();
 	
 //	if (!GraphicsHandler::initSDLHandler()) {
 //		
