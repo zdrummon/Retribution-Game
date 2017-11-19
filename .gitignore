@@ -1,5 +1,5 @@
 # Directories
-archive/
+localtemp/*
 
 # Executables
 *.exe
