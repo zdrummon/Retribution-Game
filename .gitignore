@@ -3,3 +3,6 @@ localtemp/*
 
 # Executables
 *.exe
+
+# DLL files
+*.dll
