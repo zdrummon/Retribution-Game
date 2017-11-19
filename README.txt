@@ -1,3 +1,3 @@
-cd documents/cplusplus_practice/zaxgameprototype
+cd documents/cplusplus_practice
 mingw32-make.exe
 ./karateChess
