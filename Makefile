@@ -1,5 +1,5 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = source/main.cpp source/LogHandler.cpp 
+OBJS = source/main.cpp source/LogHandler.cpp source/GraphicsHandler.cpp
 
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = KarateChess

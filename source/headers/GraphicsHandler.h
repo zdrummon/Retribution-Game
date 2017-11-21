@@ -1,23 +1,34 @@
 #pragma once
-
-class LogHandler {
+SDL_Surface* loadSurface (std::string path);
+enum MapTile {
+			MAP_TILE_DEFAULT,
+			MAP_TILE_WALL,
+			MAP_TILE_FLOOR,
+			MAP_TILE_PLAYER,
+			MAP_TILE_ENEMY,
+			MAP_TILE_TOTAL
+		};
+		
+class GraphicsHandler {
 	
 	public:
 		GraphicsHandler();
 		
+		const int getMAP_WIDTH() const;
+		const int getMAP_HEIGHT() const;
+		const int getTILE_WIDTH() const;
+		const int getTILE_HEIGHT() const;
+		const int getSCREEN_WIDTH() const;
+		const int getSCREEN_HEIGHT() const;
+		int getMapTile();
+		
 		bool initializeSDLHandler();
 		bool mediaLoader();
-		SDL_Surface* loadSurface (std::string path);
+		
 		void closeSDLHandler();
-		void mapGraphicsPrinter();
+		void mapGraphicsPrinter(int mapData[20][20][2]);
 
-		int getMAP_WIDTH();
-		int getMAP_HEIGHT();
-		int getTILE_WIDTH();
-		int getTILE_HEIGHT();
-		int getSCREEN_WIDTH();
-		int getSCREEN_HEIGHT();
-		int getMapTile();
+		
 		
 	protected:	
 	
@@ -29,17 +40,10 @@ class LogHandler {
 		const int SCREEN_WIDTH = TILE_WIDTH * MAP_WIDTH;
 		const int SCREEN_HEIGHT = TILE_HEIGHT * MAP_HEIGHT;
 		
-		enum MapTile {
-			MAP_TILE_DEFAULT,
-			MAP_TILE_WALL,
-			MAP_TILE_FLOOR,
-			MAP_TILE_PLAYER,
-			MAP_TILE_ENEMY,
-			MAP_TILE_TOTAL
-		};
+		
 		
 		//Loads individual image
-		SDL_Surface* loadSurface (std::string path);
+		//SDL_Surface* loadSurface (std::string path);
 		
 		//The window we'll be rendering to
 		SDL_Window* windowHandler = NULL;

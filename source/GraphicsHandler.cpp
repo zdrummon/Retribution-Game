@@ -4,11 +4,42 @@
 #include <stdio.h>
 #include <string>
 //headers
-#include "LogHandler.h"
+//#include "headers/LogHandler.h"
+#include "headers/GraphicsHandler.h"
+
+
+
+
+
+
 
 GraphicsHandler::GraphicsHandler() {}	
+
+
+
+const int GraphicsHandler::getMAP_WIDTH()const{
+	return MAP_WIDTH;
+}
+const int GraphicsHandler::getMAP_HEIGHT()const{
+	return MAP_HEIGHT;
+}
+const int GraphicsHandler::getTILE_WIDTH()const{
+	return TILE_WIDTH;
+}
+const int GraphicsHandler::getTILE_HEIGHT()const{
+	return TILE_HEIGHT;
+}
+const int GraphicsHandler::getSCREEN_WIDTH()const{
+	return SCREEN_WIDTH;
+}
+const int GraphicsHandler::getSCREEN_HEIGHT()const{
+	return SCREEN_HEIGHT;
+}
+int GraphicsHandler::getMapTile(){
 	
-bool initSDLHandler() {
+}
+	
+bool GraphicsHandler::initializeSDLHandler() {
 	
     bool initSuccess = true;
 	
@@ -18,7 +49,7 @@ bool initSDLHandler() {
 		initSuccess = false;
 		
 		//{---LOG---SDL could not initialize	
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("SDL could not initialize! SDL_Error: %s", SDL_GetError()); //}
 		
     } else {
@@ -31,7 +62,7 @@ bool initSDLHandler() {
 			initSuccess = false;
 		
 			//{---LOG---window could not be created	
-			LogHandler::logEvents();
+		//	LogHandler::logEvents();
 			printf ("window could not be created! SDL_Error: %s", SDL_GetError()); //}
 			
 		} else {
@@ -58,7 +89,7 @@ bool initSDLHandler() {
 	return initSuccess;
 }
 
-bool mediaHandler() {
+bool GraphicsHandler::mediaLoader() {
 	
     bool initSuccess = true;
 	
@@ -67,7 +98,7 @@ bool mediaHandler() {
 	if (mapSurfaces [MAP_TILE_DEFAULT] == NULL) {
     
 		//{---LOG---failed to load default image
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("Failed to load default image!"); //}
         initSuccess = false;
     }
@@ -77,7 +108,7 @@ bool mediaHandler() {
     if (mapSurfaces [MAP_TILE_WALL] == NULL) {
     
 		//{---LOG---failed to load wall image
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("Failed to load wall image!"); //}
         initSuccess = false;
     }
@@ -87,7 +118,7 @@ bool mediaHandler() {
 	if (mapSurfaces [MAP_TILE_FLOOR] == NULL) {
     
 		//{---LOG---failed to load floor image
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("Failed to load floor image!"); //}
         initSuccess = false;
     }
@@ -97,7 +128,7 @@ bool mediaHandler() {
 	if (mapSurfaces [MAP_TILE_PLAYER] == NULL) {
     
 		//{---LOG---failed to load player image
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("Failed to load player image!"); //}
         initSuccess = false;
     }
@@ -107,7 +138,7 @@ bool mediaHandler() {
 	if (mapSurfaces [MAP_TILE_ENEMY] == NULL) {
     
 		//{---LOG---failed to load enemy image
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("Failed to load enemy image!"); //}
         initSuccess = false;
     }
@@ -115,7 +146,7 @@ bool mediaHandler() {
 	return initSuccess;
 }
 
-void closeSDLHandler() {
+void GraphicsHandler::closeSDLHandler() {
 	
 	//Deallocate surface
 	for (int i = 0; i < MAP_TILE_TOTAL; ++i) {
@@ -129,13 +160,13 @@ void closeSDLHandler() {
 	SDL_Quit();
 }
 
-void mapGraphicsPrinter() {
+void GraphicsHandler::mapGraphicsPrinter(int mapData[20][20][2]) {
 
 	SDL_Rect imageTransform;
 	
 	//Apply the map array stretched
-	for (int i = 0; i < MAP_WIDTH_SET; i++) {
-		for (int j = 0; j < MAP_HEIGHT_SET; j++) {
+	for (int i = 0; i < MAP_WIDTH; i++) {
+		for (int j = 0; j < MAP_HEIGHT; j++) {
 			
 			if (mapData[i][j][1] == MAP_TILE_PLAYER) {
 				
@@ -156,7 +187,7 @@ void mapGraphicsPrinter() {
 			} else {
 				
 				//{---LOG---failed to load default image
-				LogHandler::logEvents();
+				//LogHandler::logEvents();
 				printf ("Map data missing at %i, %i", i, j); //}
 			}
 			
@@ -183,7 +214,7 @@ SDL_Surface* loadSurface (std::string path) {
 	if (loadedSurface == NULL) {
 		
 		//{---LOG---unable to load image
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("Unable to load image %s! SDL Error: %s", path.c_str(), SDL_GetError()); //}
 	
 	} else {
@@ -193,7 +224,7 @@ SDL_Surface* loadSurface (std::string path) {
 		if (optimizedSurface == NULL) {
 			
 			//{---LOG---unable to optimize image
-			LogHandler::logEvents();
+			//LogHandler::logEvents();
 			printf ("Unable to optimize image %s! SDL Error: %s", path.c_str(), SDL_GetError());
 		}
 
