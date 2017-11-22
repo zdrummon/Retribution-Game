@@ -1,23 +1,36 @@
 #pragma once
 
-class LogHandler {
+class GraphicsHandler {
 	
 	public:
 		GraphicsHandler();
 		
+		//functions
 		bool initializeSDLHandler();
 		bool mediaLoader();
-		SDL_Surface* loadSurface (std::string path);
 		void closeSDLHandler();
 		void mapGraphicsPrinter();
-
+		//Loads individual image and optimizes it
+		SDL_Surface* getLoadSurface (std::string path);
+		
+		//getters
 		int getMAP_WIDTH();
 		int getMAP_HEIGHT();
 		int getTILE_WIDTH();
 		int getTILE_HEIGHT();
 		int getSCREEN_WIDTH();
 		int getSCREEN_HEIGHT();
-		int getMapTile();
+		int getMapTile();		
+		SDL_Window* getWindowHandler;
+		SDL_Surface* getWindowSurface;
+		SDL_Surface* getMapSurfaces [];
+		SDL_Surface* getCurrentSurface;
+		
+		//setters
+		void setWindowHandler(SDL_Window* setWindow);
+		void setWindowSurface;
+		void setMapSurfaces [];
+		void setCurrentSurface;
 		
 	protected:	
 	

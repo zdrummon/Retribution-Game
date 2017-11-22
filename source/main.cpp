@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include <string>
 //headers
-//#include "headers/main.h"
+#include "headers/main.h"
 #include "headers/LogHandler.h"
-//#include "headers/GraphicsHandler.h"
+#include "headers/GraphicsHandler.h"
 //namespaces
 using namespace std;
 //main class body

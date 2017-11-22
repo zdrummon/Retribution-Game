@@ -4,11 +4,14 @@
 #include <stdio.h>
 #include <string>
 //headers
-#include "LogHandler.h"
+#include "headers/LogHandler.h"
+#include "headers/GraphicsHandler.h"
+//namespaces
+using namespace std;
 
 GraphicsHandler::GraphicsHandler() {}	
 	
-bool initSDLHandler() {
+bool GraphicsHandler::initSDLHandler() {
 	
     bool initSuccess = true;
 	
@@ -24,6 +27,7 @@ bool initSDLHandler() {
     } else {
         
 		//Create window
+        GraphicsHandler::setWindowHandler (SDL_CreateWindow ("Karate Chess 0.0.0.5", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN));		
         windowHandler = SDL_CreateWindow ("Karate Chess 0.0.0.5", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		
 		if (windowHandler == NULL) {
@@ -58,7 +62,7 @@ bool initSDLHandler() {
 	return initSuccess;
 }
 
-bool mediaHandler() {
+bool GraphicsHandler::mediaHandler() {
 	
     bool initSuccess = true;
 	
@@ -115,7 +119,7 @@ bool mediaHandler() {
 	return initSuccess;
 }
 
-void closeSDLHandler() {
+void GraphicsHandler::closeSDLHandler() {
 	
 	//Deallocate surface
 	for (int i = 0; i < MAP_TILE_TOTAL; ++i) {
@@ -129,7 +133,7 @@ void closeSDLHandler() {
 	SDL_Quit();
 }
 
-void mapGraphicsPrinter() {
+void GraphicsHandler::mapGraphicsPrinter() {
 
 	SDL_Rect imageTransform;
 	
@@ -171,8 +175,7 @@ void mapGraphicsPrinter() {
 	}
 }
 
-//Loads individual image
-SDL_Surface* loadSurface (std::string path) {
+SDL_Surface* GraphicsHandler::loadSurface (std::string path) {
 	
 	//The final optimized image
 	SDL_Surface* optimizedSurface = NULL;
@@ -203,3 +206,22 @@ SDL_Surface* loadSurface (std::string path) {
 
 	return optimizedSurface;
 }
+
+//getters
+int getMAP_WIDTH() {return MAP_WIDTH;}
+int getMAP_HEIGHT() {return MAP_HEIGHT;}
+int getTILE_WIDTH() {return TILE_WIDTH;}
+int getTILE_HEIGHT() {return TILE_HEIGHT;}
+int getSCREEN_WIDTH() {return SCREEN_WIDTH;}
+int getSCREEN_HEIGHT() {return SCREEN_HEIGHT;}
+int getMapTile() {return MapTile;}		
+SDL_Window* getWindowHandler() {return windowHandler;}
+SDL_Surface* getWindowSurface() {return windowSurface;}
+SDL_Surface* getMapSurfaces [] {return mapSurfaces;}
+SDL_Surface* getCurrentSurface() {return currentSurface;}
+
+//setters
+void setWindowHandler(SDL_Window* setWindowHandler) {windowHandler = setWindowHandler;}
+void setWindowSurface(SDL_Surface* setWindowSurface) {windowSurface = setWindowSurface;}
+void setMapSurfaces(SDL_Surface* setMapSurfaces) {mapSurfaces = setMapSurfaces;}
+void setCurrentSurface(SDL_Surface* setCurrentSurface) {currentSurface = setCurrentSurface;}
