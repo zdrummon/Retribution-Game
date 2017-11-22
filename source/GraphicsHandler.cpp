@@ -4,14 +4,42 @@
 #include <stdio.h>
 #include <string>
 //headers
-#include "headers/LogHandler.h"
+//#include "headers/LogHandler.h"
 #include "headers/GraphicsHandler.h"
-//namespaces
-using namespace std;
+
+
+
+
+
+
 
 GraphicsHandler::GraphicsHandler() {}	
+
+
+
+const int GraphicsHandler::getMAP_WIDTH()const{
+	return MAP_WIDTH;
+}
+const int GraphicsHandler::getMAP_HEIGHT()const{
+	return MAP_HEIGHT;
+}
+const int GraphicsHandler::getTILE_WIDTH()const{
+	return TILE_WIDTH;
+}
+const int GraphicsHandler::getTILE_HEIGHT()const{
+	return TILE_HEIGHT;
+}
+const int GraphicsHandler::getSCREEN_WIDTH()const{
+	return SCREEN_WIDTH;
+}
+const int GraphicsHandler::getSCREEN_HEIGHT()const{
+	return SCREEN_HEIGHT;
+}
+int GraphicsHandler::getMapTile(){
 	
-bool GraphicsHandler::initSDLHandler() {
+}
+	
+bool GraphicsHandler::initializeSDLHandler() {
 	
     bool initSuccess = true;
 	
@@ -21,13 +49,12 @@ bool GraphicsHandler::initSDLHandler() {
 		initSuccess = false;
 		
 		//{---LOG---SDL could not initialize	
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("SDL could not initialize! SDL_Error: %s", SDL_GetError()); //}
 		
     } else {
         
 		//Create window
-        GraphicsHandler::setWindowHandler (SDL_CreateWindow ("Karate Chess 0.0.0.5", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN));		
         windowHandler = SDL_CreateWindow ("Karate Chess 0.0.0.5", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		
 		if (windowHandler == NULL) {
@@ -35,7 +62,7 @@ bool GraphicsHandler::initSDLHandler() {
 			initSuccess = false;
 		
 			//{---LOG---window could not be created	
-			LogHandler::logEvents();
+		//	LogHandler::logEvents();
 			printf ("window could not be created! SDL_Error: %s", SDL_GetError()); //}
 			
 		} else {
@@ -62,7 +89,7 @@ bool GraphicsHandler::initSDLHandler() {
 	return initSuccess;
 }
 
-bool GraphicsHandler::mediaHandler() {
+bool GraphicsHandler::mediaLoader() {
 	
     bool initSuccess = true;
 	
@@ -71,7 +98,7 @@ bool GraphicsHandler::mediaHandler() {
 	if (mapSurfaces [MAP_TILE_DEFAULT] == NULL) {
     
 		//{---LOG---failed to load default image
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("Failed to load default image!"); //}
         initSuccess = false;
     }
@@ -81,7 +108,7 @@ bool GraphicsHandler::mediaHandler() {
     if (mapSurfaces [MAP_TILE_WALL] == NULL) {
     
 		//{---LOG---failed to load wall image
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("Failed to load wall image!"); //}
         initSuccess = false;
     }
@@ -91,7 +118,7 @@ bool GraphicsHandler::mediaHandler() {
 	if (mapSurfaces [MAP_TILE_FLOOR] == NULL) {
     
 		//{---LOG---failed to load floor image
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("Failed to load floor image!"); //}
         initSuccess = false;
     }
@@ -101,7 +128,7 @@ bool GraphicsHandler::mediaHandler() {
 	if (mapSurfaces [MAP_TILE_PLAYER] == NULL) {
     
 		//{---LOG---failed to load player image
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("Failed to load player image!"); //}
         initSuccess = false;
     }
@@ -111,7 +138,7 @@ bool GraphicsHandler::mediaHandler() {
 	if (mapSurfaces [MAP_TILE_ENEMY] == NULL) {
     
 		//{---LOG---failed to load enemy image
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("Failed to load enemy image!"); //}
         initSuccess = false;
     }
@@ -133,13 +160,13 @@ void GraphicsHandler::closeSDLHandler() {
 	SDL_Quit();
 }
 
-void GraphicsHandler::mapGraphicsPrinter() {
+void GraphicsHandler::mapGraphicsPrinter(int mapData[20][20][2]) {
 
 	SDL_Rect imageTransform;
 	
 	//Apply the map array stretched
-	for (int i = 0; i < MAP_WIDTH_SET; i++) {
-		for (int j = 0; j < MAP_HEIGHT_SET; j++) {
+	for (int i = 0; i < MAP_WIDTH; i++) {
+		for (int j = 0; j < MAP_HEIGHT; j++) {
 			
 			if (mapData[i][j][1] == MAP_TILE_PLAYER) {
 				
@@ -160,7 +187,7 @@ void GraphicsHandler::mapGraphicsPrinter() {
 			} else {
 				
 				//{---LOG---failed to load default image
-				LogHandler::logEvents();
+				//LogHandler::logEvents();
 				printf ("Map data missing at %i, %i", i, j); //}
 			}
 			
@@ -175,7 +202,8 @@ void GraphicsHandler::mapGraphicsPrinter() {
 	}
 }
 
-SDL_Surface* GraphicsHandler::loadSurface (std::string path) {
+//Loads individual image
+SDL_Surface* loadSurface (std::string path) {
 	
 	//The final optimized image
 	SDL_Surface* optimizedSurface = NULL;
@@ -186,7 +214,7 @@ SDL_Surface* GraphicsHandler::loadSurface (std::string path) {
 	if (loadedSurface == NULL) {
 		
 		//{---LOG---unable to load image
-		LogHandler::logEvents();
+		//LogHandler::logEvents();
 		printf ("Unable to load image %s! SDL Error: %s", path.c_str(), SDL_GetError()); //}
 	
 	} else {
@@ -196,7 +224,7 @@ SDL_Surface* GraphicsHandler::loadSurface (std::string path) {
 		if (optimizedSurface == NULL) {
 			
 			//{---LOG---unable to optimize image
-			LogHandler::logEvents();
+			//LogHandler::logEvents();
 			printf ("Unable to optimize image %s! SDL Error: %s", path.c_str(), SDL_GetError());
 		}
 
@@ -206,22 +234,3 @@ SDL_Surface* GraphicsHandler::loadSurface (std::string path) {
 
 	return optimizedSurface;
 }
-
-//getters
-int getMAP_WIDTH() {return MAP_WIDTH;}
-int getMAP_HEIGHT() {return MAP_HEIGHT;}
-int getTILE_WIDTH() {return TILE_WIDTH;}
-int getTILE_HEIGHT() {return TILE_HEIGHT;}
-int getSCREEN_WIDTH() {return SCREEN_WIDTH;}
-int getSCREEN_HEIGHT() {return SCREEN_HEIGHT;}
-int getMapTile() {return MapTile;}		
-SDL_Window* getWindowHandler() {return windowHandler;}
-SDL_Surface* getWindowSurface() {return windowSurface;}
-SDL_Surface* getMapSurfaces [] {return mapSurfaces;}
-SDL_Surface* getCurrentSurface() {return currentSurface;}
-
-//setters
-void setWindowHandler(SDL_Window* setWindowHandler) {windowHandler = setWindowHandler;}
-void setWindowSurface(SDL_Surface* setWindowSurface) {windowSurface = setWindowSurface;}
-void setMapSurfaces(SDL_Surface* setMapSurfaces) {mapSurfaces = setMapSurfaces;}
-void setCurrentSurface(SDL_Surface* setCurrentSurface) {currentSurface = setCurrentSurface;}
