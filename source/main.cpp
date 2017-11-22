@@ -20,7 +20,6 @@ int main (int argc, char* args[]) {
 	
 	GraphicsHandler GraphHand;
 	
-	
 	if (!GraphHand.initializeSDLHandler()) {
 		
 		//{---LOG---failed to initialize SDL
@@ -41,6 +40,7 @@ int main (int argc, char* args[]) {
 		}
 	}
 
+	SDL_Delay( 5000 );
 	GraphHand.closeSDLHandler();
 	
 	Log.logEnd();

@@ -7,8 +7,6 @@
 //namespaces
 using namespace std;
 
-clock_t startTicker;
-clock_t totalTicks;
 LogHandler::LogHandler() {}
 
 void LogHandler::logStart() {

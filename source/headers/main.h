@@ -1,9 +1,9 @@
 #pragma once
 
 #include "LogHandler.h"
-#include "GraphicsHandler.h"
-//{---CONSTANTS
+//#include "GraphicsHandler.h"
 
+//{---CONSTANTS
 enum KeyPress {
     KEY_PRESS_DEFAULT,
     KEY_PRESS_UP,
@@ -13,14 +13,14 @@ enum KeyPress {
     KEY_PRESS_TOTAL
 };
 
-enum MapTile {
-    MAP_TILE_DEFAULT,
-    MAP_TILE_WALL,
-    MAP_TILE_FLOOR,
-	MAP_TILE_PLAYER,
-	MAP_TILE_ENEMY,
-    MAP_TILE_TOTAL
-}; //}
+//enum MapTile {
+//  MAP_TILE_DEFAULT,
+//  MAP_TILE_WALL,
+//	MAP_TILE_FLOOR,
+//	MAP_TILE_PLAYER,
+//	MAP_TILE_ENEMY,
+//  MAP_TILE_TOTAL
+//}; //}
 
 const int MAP_WIDTH=10;
 const int MAP_HEIGHT=10;
@@ -48,8 +48,6 @@ void mapPopulator();
 void mapGraphicsPrinter(); //}
 
 //{---Functions
-
-
 
 /*
 void runGame() {
@@ -267,14 +265,3 @@ void mapPopulator() {
 	mapData[GraphicsHandler::MAP_WIDTH / 4][GraphicsHandler::MAP_HEIGHT / 4][1] = MAP_TILE_ENEMY;
 }
 */
-
-
-
-
-
-
-
-
-
-
-

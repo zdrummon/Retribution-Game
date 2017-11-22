@@ -1,13 +1,15 @@
 #pragma once
+
 SDL_Surface* loadSurface (std::string path);
+
 enum MapTile {
-			MAP_TILE_DEFAULT,
-			MAP_TILE_WALL,
-			MAP_TILE_FLOOR,
-			MAP_TILE_PLAYER,
-			MAP_TILE_ENEMY,
-			MAP_TILE_TOTAL
-		};
+		MAP_TILE_DEFAULT,
+		MAP_TILE_WALL,
+		MAP_TILE_FLOOR,
+		MAP_TILE_PLAYER,
+		MAP_TILE_ENEMY,
+		MAP_TILE_TOTAL
+	};
 		
 class GraphicsHandler {
 	
@@ -26,9 +28,7 @@ class GraphicsHandler {
 		bool mediaLoader();
 		
 		void closeSDLHandler();
-		void mapGraphicsPrinter(int mapData[20][20][2]);
-
-		
+		void mapGraphicsPrinter(int mapData[20][20][2]);	
 		
 	protected:	
 	

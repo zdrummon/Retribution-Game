@@ -7,15 +7,7 @@
 //#include "headers/LogHandler.h"
 #include "headers/GraphicsHandler.h"
 
-
-
-
-
-
-
 GraphicsHandler::GraphicsHandler() {}	
-
-
 
 const int GraphicsHandler::getMAP_WIDTH()const{
 	return MAP_WIDTH;
@@ -35,9 +27,7 @@ const int GraphicsHandler::getSCREEN_WIDTH()const{
 const int GraphicsHandler::getSCREEN_HEIGHT()const{
 	return SCREEN_HEIGHT;
 }
-int GraphicsHandler::getMapTile(){
-	
-}
+//int GraphicsHandler::getMapTile(){}
 	
 bool GraphicsHandler::initializeSDLHandler() {
 	
@@ -203,34 +193,4 @@ void GraphicsHandler::mapGraphicsPrinter(int mapData[20][20][2]) {
 }
 
 //Loads individual image
-SDL_Surface* loadSurface (std::string path) {
-	
-	//The final optimized image
-	SDL_Surface* optimizedSurface = NULL;
-	
-	//Load image at specified path
-	SDL_Surface* loadedSurface = SDL_LoadBMP (path.c_str());
-	
-	if (loadedSurface == NULL) {
-		
-		//{---LOG---unable to load image
-		//LogHandler::logEvents();
-		printf ("Unable to load image %s! SDL Error: %s", path.c_str(), SDL_GetError()); //}
-	
-	} else {
-		
-		//Convert surface to screen format
-		optimizedSurface = SDL_ConvertSurface (loadedSurface, windowSurface->format, NULL);
-		if (optimizedSurface == NULL) {
-			
-			//{---LOG---unable to optimize image
-			//LogHandler::logEvents();
-			printf ("Unable to optimize image %s! SDL Error: %s", path.c_str(), SDL_GetError());
-		}
-
-		//Get rid of old loaded surface
-		SDL_FreeSurface (loadedSurface);
-	}
-
-	return optimizedSurface;
-}
+SDL_Surface* loadSurface (std::string path) {}

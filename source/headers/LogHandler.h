@@ -12,7 +12,8 @@ class LogHandler {
 	
 	private:
 		int logCount;
-		
+		clock_t startTicker;
+		clock_t totalTicks;
 		double ticksInSeconds;	
 		
 };
