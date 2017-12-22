@@ -5,15 +5,17 @@ OBJS = source/main.cpp source/LogHandler.cpp source/GraphicsHandler.cpp
 OBJ_NAME = KarateChess
 
 #INCLUDE_PATHS specifies the additional include paths we'll need
-INCLUDE_PATHS = -IC:/mingw_dev_lib/include/SDL2
+INCLUDE_PATHS = -ID:/Development/External_Libraries/mingw_dev_lib/include/SDL2
 
 #LIBRARY_PATHS specifies the additional library paths we'll need
-LIBRARY_PATHS = -LC:/mingw_dev_lib/lib
+LIBRARY_PATHS = -LD:/Development/External_Libraries/mingw_dev_lib/lib
 
 #COMPILER_FLAGS specifies the additional compilation options we're using
-# -w suppresses all warnings
 # -Wl,-subsystem,windows gets rid of the console window
-COMPILER_FLAGS = -w -Wl,-subsystem,windows
+# -w suppresses all warnings
+# -Wall enables almost all warnings
+# -Wextra enables extra warnings
+COMPILER_FLAGS = -Wl,-subsystem,windows -Wall -Wextra
 
 #LINKER_FLAGS specifies the libraries we're linking against
 LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2 

@@ -7,3 +7,6 @@ KarateChess.exe
 
 # DLL files
 *.dll
+
+# special files
+Makefile
